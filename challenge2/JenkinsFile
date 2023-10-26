@@ -1,0 +1,54 @@
+pipeline {
+    agent any
+    stages {
+        stage("Stage 1"){
+            steps {
+                echo "This is Stage 1"
+            }
+        }
+        stage("Stage 2"){
+            steps {
+                sh 'echo "Stage 2"'
+            }
+        }
+        stage("Stage 3"){
+            steps {
+                sh 'echo "Stage 3"'
+            }
+        }
+        stage("Stage 4"){
+            steps {
+                sh 'echo "Stage 4"'
+            }
+        }
+        stage("Stage 5"){
+            steps {
+                sh 'echo "Stage 5"'
+            }
+        }
+        stage("Clean Up"){
+            steps {
+                deleteDir()
+            }
+        }
+        stage("Clone Repo"){
+            steps {
+                sh "git clone https://github.com/jenkins-docs/simple-java-maven-app.git"
+            }
+        }
+        stage("Build"){
+            steps {
+                dir("simple-java-maven-app"){
+                    sh "mvn clean install"
+                }            
+            }
+        }
+        stage("Test"){
+            steps {
+                dir("simple-java-maven-app"){
+                    sh "mvn test"
+                }            
+            }
+        }
+    }
+}

@@ -1,0 +1,26 @@
+pipeline {
+    agent any
+    parameters {
+        string(defaultValue: "", description: "Custom deployment name?", name: "depName")
+        choice(choices: ["EU-WEST-2A", "EU-WEST-2B", "EU-WEST-2C"], description: "Select which AZ to deploy to:", name: "depAZ")
+        booleanParam(defaultValue: false, description: "Start?", name: "startBool")
+    }
+    stages {
+        stage("Demo"){
+            steps {
+                script {
+                    def boolVar2 = false
+                    if(params.startBool == true && boolVar2 == false) {
+                        myFunc(params.depName, params.depAZ)
+                    } else {
+                        return
+                    }
+                }
+            }
+        }
+    }
+}
+
+def myFunc(String myText, String myNumber) {
+    echo "depName is set to ${depName} and depAZ is ${depAZ}"
+}
